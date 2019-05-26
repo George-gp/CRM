@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.briup.dao.CustomerDao">
+	
+	<select id="allCustomer" resultType="cst_customer">
+		select * from cst_customer
+	</select>
+
+	<insert id="addCustomer">
+		insert into cst_customer(cust_name,cust_manager_name,cust_addr,cust_zip,cust_tel,cust_fax,cust_website,cust_licence_no,cust_chieftain,cust_bankroll,cust_national_tax_no,cust_turnover,cust_bank,cust_bank_account,cust_local_tax_no,cust_region,cust_level_label) 
+		values(#{cust_name},#{cust_manager_name},#{cust_addr},#{cust_zip},#{cust_tel},#{cust_fax},#{cust_website},#{cust_licence_no},#{cust_chieftain},#{cust_bankroll},#{cust_national_tax_no},#{cust_turnover},#{cust_bank},#{cust_bank_account},#{cust_local_tax_no},#{cust_region},#{cust_level_label}); 
+	</insert>
+
+	<update id="updateCustomer">
+		update cst_customer set
+		cust_name=#{cust_name},cust_manager_name=#{cust_manager_name},cust_addr=#{cust_addr},cust_zip=#{cust_zip},cust_tel=#{cust_tel},cust_fax=#{cust_fax},cust_website=#{cust_website},cust_licence_no=#{cust_licence_no},cust_chieftain=#{cust_chieftain},cust_bankroll=#{cust_bankroll},cust_national_tax_no=#{cust_national_tax_no},cust_turnover=#{cust_turnover},cust_bank=#{cust_bank},cust_bank_account=#{cust_bank_account},cust_local_tax_no=#{cust_local_tax_no},cust_region=#{cust_region},cust_level_label=#{cust_level_label}
+		where cust_id=#{cust_id}
+	</update>
+	
+	<delete id="delCustomerById" parameterType="int">
+		delete from cst_customer where cust_id=#{cust_id}
+	</delete>
+	
+	<select id="allLinkman" parameterType="int" resultType="cst_linkman">
+		select * from cst_linkman where lkm_cust_id=#{cust_id}
+	</select>
+	
+	<select id="queryAllAcv" parameterType="int" resultType="cst_activity">
+		select * from cst_activity where atv_cust_id=#{cust_id}
+	</select>
+	
+	<insert id="addLinkMan">
+		insert into cst_linkman 
+		values(#{lkm_id},#{lkm_cust_id},#{lkm_name},#{lkm_sex},#{lkm_postion},#{lkm_tel},#{lkm_mobile},#{lkm_memo})
+	</insert>
+	
+	<update id="updateLinkman">
+		update cst_linkman set
+		lkm_name=#{lkm_name},lkm_sex=#{lkm_sex},lkm_postion=#{lkm_postion},lkm_tel=#{lkm_tel},lkm_mobile=#{lkm_mobile},lkm_memo=#{lkm_memo}
+		where lkm_id=#{lkm_id}
+	</update>
+	
+	<delete id="deleteLinkMan">
+		delete from cst_linkman where lkm_id=#{lkm_id}
+	</delete>
+	
+	<insert id="addCst_activity" parameterType="cst_customer">
+		insert into cst_activity(atv_cust_id,atv_place,atv_title,atv_desc,atv_cust_name) 
+		values(#{atv_cust_id},#{atv_place},#{atv_title},#{atv_desc},#{atv_cust_name}); 
+	</insert>
+	
+	<select id="findCstbyId" resultType="cst_customer">
+		select * from cst_customer where cust_id=#{cust_id}
+	</select>
+	
+	<update id="updateAtv">
+		update cst_activity set
+		atv_place=#{atv_place},atv_title=#{atv_title},atv_desc=#{atv_desc}
+		where atv_id=#{atv_id}
+	</update>
+	
+	<delete id="deleteAtv">
+		delete from cst_activity where atv_id=#{atv_id}
+	</delete>
+</mapper>
